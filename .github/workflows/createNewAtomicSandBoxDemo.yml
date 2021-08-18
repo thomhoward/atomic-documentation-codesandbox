@@ -20,7 +20,9 @@ jobs:
       - name: Run script to update package.json and CDN in index.html on new branch
         run: |
           gem install nokogiri
+          ls
           rm index.html
+          ls
           curl https://github.com/coveo/ui-kit/blob/master/packages/atomic/src/pages/index.html --output index.html
           cd .github/scripts
           ruby update_package.rb ${{ github.event.client_payload.atomic_version }}

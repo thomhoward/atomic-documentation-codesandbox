@@ -30,6 +30,7 @@ class UpdatePackage
       script['src'] = "https://static.cloud.coveo.com/atomic/" + "#{version_stripped}" + "/atomic.esm.js"
       # at the time of making this, stylesheets are not being versioned in CDN so latest is always safest bet
       stylesheet['href'] = "https://static.cloud.coveo.com/atomic/latest/themes/default.css"
+      doc.to_html
       File.write("../../index.html", doc)
     end
 
