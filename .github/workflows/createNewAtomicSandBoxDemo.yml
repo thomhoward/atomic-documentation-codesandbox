@@ -3,7 +3,7 @@ on:
   repository_dispatch:
     types: [atomic_docs_generated]
 jobs:
-  create-new-demo:
+  create-new-version-demo:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -17,8 +17,10 @@ jobs:
         uses: actions/setup-ruby@v1
         with:
           ruby-version: '2.6'
-      - name: Run script to update package.json on new branch
+      - name: Run script to update package.json and CDN in index.html on new branch
         run: |
+          rm index.html
+          curl https://github.com/coveo/ui-kit/blob/master/packages/atomic/src/pages/index.html --output index.html
           cd .github/scripts
           ruby update_package.rb ${{ github.event.client_payload.atomic_version }}
       - name: Create PR for new branch
@@ -29,4 +31,27 @@ jobs:
           title: "Generate Atomic CSB Demo v${{ github.event.client_payload.atomic_version }}"
           branch: "csb-atomic-${{ github.event.client_payload.headless_version }}"
           commit-message: "Update version"
+          assignees: dlutzCoveo
+  update-latest-version-demo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Ruby in runner
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: '2.6'
+      - name: Run script to update package.json and CDN in index.html on master branch
+        run: |
+          rm index.html
+          curl https://github.com/coveo/ui-kit/blob/master/packages/atomic/src/pages/index.html --output index.html
+          cd .github/scripts
+          ruby update_package.rb latest
+      - name: Create PR for new branch
+        uses: gr2m/create-or-update-pull-request-action@cbfed2a38aedceab8d9fc0d9ac14890fc181d39e
+        env:
+          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        with:
+          title: "Update Latest Atomic CSB Demo"
+          branch: "csb-atomic-${{ github.event.client_payload.headless_version }}"
+          commit-message: "Update latest version"
           assignees: dlutzCoveo

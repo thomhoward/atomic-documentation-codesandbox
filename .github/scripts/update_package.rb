@@ -1,23 +1,36 @@
 require 'json'
+require 'nokogiri'
 class UpdatePackage
 
     def initialize(version)
       @version = version
       @package = JSON.parse(File.read('../../package.json'))
+      @index_page = Nokogiri::HTML(File.open("../../index.html"))
     end
 
     def write
-        new_package = @package
-        update_title_version(new_package, @version)
-        update_atomic_version(new_package, @version)
-        File.write('../package.json', JSON.pretty_generate(new_package))
+        update_title_version(@package, @version)
+        update_index_page
 
     end
 
     private
 
     def update_title_version(package, version)
-        package['name'] = "coveo-atomic-#{version.gsub(/[.-]/, '')}"
+        new_package = package
+        new_package['name'] = "coveo-atomic-#{version.gsub(/[.-]/, '')}"
+        File.write('../../package.json', JSON.pretty_generate(new_package))
+    end
+
+    def update_index_page
+      version_stripped = @version.gsub(/(\d+\.)(\d+)(\.\d+)/,'v\1\2' )
+      doc = @index_page
+      script = doc.xpath("//script").first
+      stylesheet = doc.xpath("//link").first
+      script['src'] = "https://static.cloud.coveo.com/atomic/" + "#{version_stripped}" + "/atomic.esm.js"
+      # at the time of making this, stylesheets are not being versioned in CDN so latest is always safest bet
+      stylesheet['href'] = "https://static.cloud.coveo.com/atomic/latest/themes/default.css"
+      File.write("../../index.html", doc)
     end
 
 end
