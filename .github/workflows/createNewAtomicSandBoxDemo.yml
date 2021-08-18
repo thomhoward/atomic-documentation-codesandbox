@@ -12,7 +12,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          branch: "csb-atomic-${{ github.event.client_payload.headless_version }}"
+          branch: "csb-atomic-${{ github.event.client_payload.atomic_version }}"
       - name: Setup Ruby in runner
         uses: actions/setup-ruby@v1
         with:
@@ -30,7 +30,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         with:
           title: "Generate Atomic CSB Demo v${{ github.event.client_payload.atomic_version }}"
-          branch: "csb-atomic-${{ github.event.client_payload.headless_version }}"
+          branch: "csb-atomic-${{ github.event.client_payload.atomic_version }}"
           commit-message: "Update version"
           assignees: dlutzCoveo
   update-latest-version-demo:
@@ -54,6 +54,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         with:
           title: "Update Latest Atomic CSB Demo"
-          branch: "csb-atomic-${{ github.event.client_payload.headless_version }}"
+          branch: "csb-atomic-latest"
           commit-message: "Update latest version"
           assignees: dlutzCoveo
