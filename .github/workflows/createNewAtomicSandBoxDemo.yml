@@ -19,6 +19,7 @@ jobs:
           ruby-version: '2.6'
       - name: Run script to update package.json and CDN in index.html on new branch
         run: |
+          gem install nokogiri
           rm index.html
           curl https://github.com/coveo/ui-kit/blob/master/packages/atomic/src/pages/index.html --output index.html
           cd .github/scripts
@@ -42,6 +43,7 @@ jobs:
           ruby-version: '2.6'
       - name: Run script to update package.json and CDN in index.html on master branch
         run: |
+          gem install nokogiri
           rm index.html
           curl https://github.com/coveo/ui-kit/blob/master/packages/atomic/src/pages/index.html --output index.html
           cd .github/scripts
