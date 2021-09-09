@@ -45,6 +45,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           title: "Update Latest Atomic CSB Demo"
-          branch: "atomic-latest"
+          branch: "latest"
           commit-message: "Update latest version"
-          assignees: dlutzCoveo
+          assignees: dlutzCoveo, jpmarceau
