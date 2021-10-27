@@ -46,4 +46,4 @@ jobs:
           title: "Update Latest Atomic CSB Demo"
           branch: "latest"
           commit-message: "Update latest version"
-          assignees: dlutzCoveo, jpmarceau
+          assignees: dlutzCoveo
