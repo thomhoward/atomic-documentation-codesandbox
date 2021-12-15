@@ -20,6 +20,9 @@ jobs:
           branch: "${{ github.event.client_payload.atomic_version }}"
       - run: 'echo "branch"'
       - run: git branch
+      - run: git checkout ${{ github.event.client_payload.atomic_version }}
+      - run: 'echo "branch"'
+      - run: git branch
       - name: Run script to update package.json and CDN in index.html on new branch
         run: |
           gem install nokogiri
