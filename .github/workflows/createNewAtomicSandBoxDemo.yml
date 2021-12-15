@@ -23,4 +23,6 @@ jobs:
           gem install nokogiri
           cd .github/scripts
           ruby update_package.rb ${{ github.event.client_payload.atomic_version }}
+          git config user.name ${{ secrets.AUTHOR }}
+          git config user.email ${{ secrets.AUTHOR_EMAIL }}
           git commit -m "updated version"
