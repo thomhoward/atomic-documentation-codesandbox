@@ -30,4 +30,7 @@ jobs:
           cd ../..
           git config user.name ${{ secrets.AUTHOR }}
           git config user.email ${{ secrets.AUTHOR_EMAIL }}
-          git commit -a -m "updated version"
+          git status
+          git add index.html
+          git commit -m "updated version"
+          git push
