@@ -29,7 +29,7 @@ class UpdatePackage
       stylesheet = doc.xpath("//link").first
       script_cdn['src'] = "https://static.cloud.coveo.com/atomic/" + "#{version_stripped}" + "/atomic.esm.js"
       # at the time of making this, stylesheets are not being versioned in CDN so latest is always safest bet
-      stylesheet['href'] = "https://static.cloud.coveo.com/atomic/latest/themes/default.css"
+      stylesheet['href'] = "https://static.cloud.coveo.com/atomic/latest/themes/coveo.css"
       doc.xpath("//script").each do |script|
         if script.to_s == '<script nomodule src="/build/atomic.js"></script>'
           script.remove
